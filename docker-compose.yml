@@ -1,6 +1,6 @@
 services:
-  medere-directory:
-    container_name: medere-directory
+  clothing-directory:
+    container_name: clothing-directory
     build:
       context: .
       dockerfile: Dockerfile.dev

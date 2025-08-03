@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Medere Sitios",
-  description: "Listado de sitios de Medere para turnos y recetas",
+  title: "MDP Clothes",
+  description: "Directorio de marcas de ropa en Mar del Plata",
   icons: {
     icon: '/favicon.ico',
   },

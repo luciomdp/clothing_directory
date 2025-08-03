@@ -33,21 +33,21 @@ export default function Page() {
   }, [query, sites])
 
   return (
-    <div className="h-[100dvh] flex flex-col bg-white">
+    <div className="h-[100dvh] flex flex-col">
       {/* Cabecera con logo */}
-      <header className="w-full flex justify-start pl-6 pt-2 pb-2 bg-white">
-        <Image src="/logo/logo-med.png" alt="Medere" width={140} height={60} priority />
+      <header className="w-full flex justify-start pl-6 pt-3 pb-3 bg-[#CCC5B7]">
+        <Image src="/logo/logo-notext-grey-slim.png" alt="Logo" width={80} height={40} priority />
       </header>
 
       {/* Contenido principal */}
-      <div className="flex flex-col flex-1 bg-gray-100 overflow-hidden">
+      <div className="flex flex-col flex-1 bg-[#F9F5F1] overflow-hidden">
         <main className="flex flex-col items-center px-4 pb-4">
-          <h1 className="text-3xl sm:text-4xl font-semibold text-[#23C3C6] text-center leading-tight mt-4">
-            Encontrá a tu profesional
+          <h1 className="text-3xl sm:text-4xl font-semibold text-[#E5BB89] text-center leading-tight mt-4">
+            Tu marca de ropa en MDP
           </h1>
 
           <p className="mt-3 text-gray-500 text-center text-base sm:text-l max-w-3xl">
-            Escribí el nombre de tu médico o su institución y accedé al sistema de turnos y/o recetas
+            Escribí el nombre de tu marca favorita en MDP y te contactamos con su sitio web oficial.
           </p>
 
           <div className="w-full max-w-3xl mt-4">
@@ -60,16 +60,16 @@ export default function Page() {
 
               <input
                 type="text"
-                placeholder="Buscar por nombre o institución..."
+                placeholder="Buscar por nombre..."
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                className="w-full pl-12 pr-6 py-5 border border-[#d1d5db] rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#3cb8ba] text-lg placeholder-gray-400 bg-[#f9fafb] transition text-black"
+                className="w-full pl-12 pr-6 py-3 border border-[#d1d5db] rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#6F5D44] text-lg placeholder-gray-400 bg-[#f9fafb] transition text-black"
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => setQuery('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
                   aria-label="Limpiar búsqueda"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,7 +92,7 @@ export default function Page() {
                   href={`https://${site.url}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block px-4 py-3 bg-[#eaf7f7] hover:bg-[#dff2f2] border-l-4 border-[#3cb8ba] text-[#01484e] text-base font-medium shadow-sm rounded-md transition"
+                  className="block px-4 py-3 bg-[#CCC5B7] hover:brightness-110 border-l-4 border-[#6F5D44] text-white text-base font-medium shadow-sm rounded-md transition"
                 >
                   {site.name}
                 </a>
@@ -105,9 +105,9 @@ export default function Page() {
       </div>
 
       {/* Footer */}
-      <footer className="w-full flex-shrink-0 flex flex-col items-center pt-2 pb-2 bg-gray-100">
-        <hr className="w-full max-w-3xl mb-2 border-t border-gray-300" />
-        <Image src="/logo/logo-med-grey.png" alt="Medere" width={100} height={50} className="brightness-100 invert" />
+      <footer className="w-full flex-shrink-0 flex flex-col items-center pt-2 pb-2 bg-[#F9F5F1]">
+        <hr className="w-full max-w-3xl border-t pb-2 border-gray-300" />
+        <Image src="/logo/logo-notext-grey-slim.png" alt="Logo" width={60} height={25} className="brightness-100 invert" />
       </footer>
     </div>
   )

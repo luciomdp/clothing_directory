@@ -15,7 +15,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Next.js: debug client-side",
-      "url": "https://medere-directory.local.dev/",
+      "url": "https://clothing-directory.local.dev/",
       "webRoot": "${workspaceFolder}"
     }
   ],
