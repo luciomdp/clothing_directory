@@ -1,0 +1,61 @@
+# Etapa 1 - Base: Establece una imagen base, permite reutilizarla en las siguientes etapas
+FROM node:22.17.1-alpine AS base
+
+
+# Etapa 2 - deps: Instala las dependencias de la aplicación
+FROM base AS deps
+
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+#libc6-compat     : mejora compatibilidad con algunas dependencias nativas.
+
+# Etapa 3 - Build: Construye la aplicación Next.js
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN npm run build
+
+# Copia el resultado de deps (solo los node_modules).
+#   Copia el código fuente.
+#   Corre next build, que:
+#       Genera el build optimizado.
+#       Gracias a output: 'standalone' (en next.config.js), crea un server.js con todas las dependencias requeridas para ejecutar la app sin el código fuente.
+
+
+# Etapa 4 - Runner: Define el contenedor final de producción. Solo incluye lo esencial para correr la app.
+FROM base AS runner
+
+WORKDIR /app
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package*.json ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
+
+# Crea un usuario nextjs sin privilegios.
+
+# Copia los archivos públicos necesarios para la app
+# Copia el package.json para trackeo de dependencias
+# Copia el build optimizado de Next.js (standalone) y los archivos estáticos.
+
+# Usa el usuario nextjs para correr la app, evitando problemas de permisos y seguridad.
+# Ejecuta server.js: arranca el servidor de Next.js

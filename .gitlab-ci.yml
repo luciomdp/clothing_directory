@@ -1,0 +1,29 @@
+workflow:
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main" && $CI_COMMIT_MESSAGE !~ /^IGNORECI.*/'
+      when: always
+    - when: never
+
+stages:
+  - register
+  - deploy
+
+variables:
+  REGISTRY_IMAGE: gitlab.advenio.com.ar:5050/advenio/medere/sitesdirectory
+  VERSION: "test"
+
+register:
+  stage: register
+  image: docker:latest
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker build -f Dockerfile.prod -t $REGISTRY_IMAGE:$VERSION .
+    - docker push $REGISTRY_IMAGE:$VERSION
+
+deploy:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - curl -X POST https://portainer-oficina.advenio.com.ar/api/stacks/webhooks/2ae689e5-e44f-4fd2-a985-7391bc78bbef
+  needs:
+    - register
