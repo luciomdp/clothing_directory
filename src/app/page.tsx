@@ -94,7 +94,8 @@ export default function Page() {
                   rel="noopener noreferrer"
                   className="block px-4 py-3 bg-[#CCC5B7] hover:brightness-110 border-l-4 border-[#6F5D44] text-white text-base font-medium shadow-sm rounded-md transition"
                 >
-                  {site.name}
+                  <div className="text-white font-semibold">{site.name}</div>
+                  <div className="text-white text-sm opacity-90">{site.description}</div>
                 </a>
               </div>
             ))
